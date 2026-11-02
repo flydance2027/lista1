@@ -3,187 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista M3U - Portal Oficial</title>
-    <!-- Fuente moderna e Iconos -->
+    <title>Lista M3U - Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background-color: #0b0f19;
-            color: #f3f4f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .card {
-            background: #111827;
-            border: 1px solid #1f2937;
-            border-radius: 16px;
-            padding: 30px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
-            text-align: center;
-        }
-
-        .logo-icon {
-            font-size: 40px;
-            color: #3b82f6;
-            margin-bottom: 15px;
-        }
-
-        h1 {
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #ffffff;
-        }
-
-        p {
-            font-size: 14px;
-            color: #9ca3af;
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
-
-        .input-group {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .m3u-input {
-            width: 100%;
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #0b0f19; color: #f3f4f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .card { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 25px; width: 100%; max-width: 420px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .logo-icon { font-size: 35px; color: #3b82f6; margin-bottom: 12px; }
+        h1 { font-size: 20px; font-weight: 600; margin-bottom: 8px; color: #ffffff; }
+        p { font-size: 13px; color: #9ca3af; margin-bottom: 20px; line-height: 1.4; }
+        
+        /* Contenedor donde aparecerá el anuncio de Monetag */
+        .ad-container {
             background: #1f2937;
-            border: 1px solid #374151;
             border-radius: 10px;
-            padding: 12px 15px;
-            color: #d1d5db;
-            font-size: 13px;
-            outline: none;
-            text-align: center;
-            transition: border-color 0.2s;
-        }
-
-        .m3u-input:focus {
-            border-color: #3b82f6;
-        }
-
-        .action-btn {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 14px 20px;
-            font-size: 15px;
-            font-weight: 600;
-            width: 100%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-            transition: all 0.2s ease-in-out;
-        }
-
-        .action-btn:hover {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
-        }
-
-        .action-btn:active {
-            transform: translateY(0);
-        }
-
-        /* Notificación Toast elegante */
-        #toast {
-            visibility: hidden;
-            background-color: #10b981;
-            color: white;
-            text-align: center;
-            border-radius: 8px;
             padding: 10px;
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 14px;
-            font-weight: 500;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-            z-index: 1000;
-            transition: visibility 0.3s, opacity 0.3s;
-            opacity: 0;
+            margin-bottom: 20px;
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px dashed #374151;
         }
 
-        #toast.show {
-            visibility: visible;
-            opacity: 1;
-        }
+        .action-btn { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; border: none; border-radius: 10px; padding: 12px 20px; font-size: 14px; font-weight: 600; width: 100%; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s; }
+        .action-btn:hover { background: linear-gradient(135deg, #2563eb 100%, #1d4ed8 100%); }
 
-        .footer-note {
-            margin-top: 20px;
-            font-size: 11px;
-            color: #6b7280;
-        }
+        #hidden-section { display: none; margin-top: 20px; animation: fadeIn 0.4s ease-in-out; }
+        .m3u-input { width: 100%; background: #1f2937; border: 1px solid #374151; border-radius: 10px; padding: 10px 15px; color: #d1d5db; font-size: 13px; outline: none; text-align: center; margin-bottom: 10px; }
+        .copy-btn { background: #10b981; color: white; border: none; border-radius: 10px; padding: 10px; width: 100%; font-weight: 600; cursor: pointer; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        #toast { visibility: hidden; background-color: #10b981; color: white; text-align: center; border-radius: 8px; padding: 10px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 14px; z-index: 1000; opacity: 0; transition: 0.3s; }
+        #toast.show { visibility: visibility; opacity: 1; }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <div class="logo-icon">
-            <i class="fa-solid fa-satellite-dish"></i>
-        </div>
+        <div class="logo-icon"><i class="fa-solid fa-satellite-dish"></i></div>
         <h1>Lista M3U Oficial</h1>
-        <p>Haz clic en el botón inferior para copiar la lista de reproducción en tu portapapeles.</p>
+        <p>Visualiza el contenido patrocinado y haz clic en el anuncio para desbloquear tu enlace.</p>
 
-        <div class="input-group">
-            <!-- REEMPLAZA ESTE ENLACE POR TU .M3U REAL DE RENDER O GITHUB -->
-            <input type="text" id="m3uUrl" class="m3u-input" value="https://tu-proyecto.onrender.com/tu-lista.m3u" readonly>
+        <!-- ESPACIO DEL ANUNCIO DE MONETAG -->
+        <div class="ad-container">
+            <!-- AQUÍ PEGÁS EL CÓDIGO SCRIPT QUE TE DA MONETAG PARA TU BANNER/ZONA WEB -->
+            <script type="text/javascript" src="https://tu-script-de-monetag.com/tag.min.js" data-zone="TU_ZONA"></script>
         </div>
 
-        <button class="action-btn" onclick="copiarYMonetizar()">
-            <i class="fa-regular fa-copy"></i> Copiar Enlace M3U
+        <!-- Botón para comprobar / desbloquear tras interactuar con el anuncio -->
+        <button id="unlock-btn" class="action-btn" onclick="desbloquearEnlace()">
+            <i class="fa-solid fa-check-circle"></i> Ya vi el anuncio / Desbloquear M3U
         </button>
 
-        <div class="footer-note">
-            Powered by Apps Studios
+        <!-- Sección oculta con el M3U -->
+        <div id="hidden-section">
+            <input type="text" id="m3uUrl" class="m3u-input" value="https://tu-proyecto.onrender.com/tu-lista.m3u" readonly>
+            <button class="copy-btn" onclick="copiarLista()">
+                <i class="fa-regular fa-copy"></i> Copiar Enlace M3U
+            </button>
         </div>
     </div>
 
-    <!-- Mensaje flotante de éxito -->
-    <div id="toast"><i class="fa-solid fa-check"></i> ¡Enlace copiado con éxito!</div>
+    <div id="toast"><i class="fa-solid fa-check"></i> ¡Enlace copiado!</div>
 
     <script>
-        function copiarYMonetizar() {
+        function desbloquearEnlace() {
+            // Oculta el botón y muestra el link M3U para copiar
+            document.getElementById('unlock-btn').style.display = 'none';
+            document.getElementById('hidden-section').style.display = 'block';
+        }
+
+        function copiarLista() {
             const input = document.getElementById('m3uUrl');
-            
-            // Seleccionar y copiar texto al portapapeles
             input.select();
-            input.setSelectionRange(0, 99999); // Para celulares
-            
             navigator.clipboard.writeText(input.value).then(() => {
-                // Mostrar notificación visual flotante
                 const toast = document.getElementById('toast');
                 toast.classList.add('show');
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 2500);
+                setTimeout(() => toast.classList.remove('show'), 2500);
             });
-
-            // Abrir tu Direct Link de Monetag en una pestaña nueva (acción válida por clic del usuario)
-            window.open('https://uplcm.com/4/12171504', '_blank');
         }
     </script>
 
