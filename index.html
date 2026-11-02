@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista M3U - Portal</title>
+    <title>Lista M3U - Portal Oficial</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -15,17 +15,17 @@
         h1 { font-size: 20px; font-weight: 600; margin-bottom: 8px; color: #ffffff; }
         p { font-size: 13px; color: #9ca3af; margin-bottom: 20px; line-height: 1.4; }
         
-        /* Contenedor donde aparecerá el anuncio de Monetag */
-        .ad-container {
+        /* Espacio reservado para el banner de Monetag */
+        .ad-box {
             background: #1f2937;
+            border: 1px dashed #374151;
             border-radius: 10px;
-            padding: 10px;
+            padding: 15px;
             margin-bottom: 20px;
-            min-height: 100px;
+            min-height: 120px;
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px dashed #374151;
         }
 
         .action-btn { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; border: none; border-radius: 10px; padding: 12px 20px; font-size: 14px; font-weight: 600; width: 100%; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s; }
@@ -37,8 +37,8 @@
         
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         
-        #toast { visibility: hidden; background-color: #10b981; color: white; text-align: center; border-radius: 8px; padding: 10px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 14px; z-index: 1000; opacity: 0; transition: 0.3s; }
-        #toast.show { visibility: visibility; opacity: 1; }
+        #toast { visibility: hidden; background-color: #10b981; color: white; text-align: center; border-radius: 8px; padding: 10px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 14px; opacity: 0; transition: 0.3s; }
+        #toast.show { visibility: visible; opacity: 1; }
     </style>
 </head>
 <body>
@@ -46,24 +46,24 @@
     <div class="card">
         <div class="logo-icon"><i class="fa-solid fa-satellite-dish"></i></div>
         <h1>Lista M3U Oficial</h1>
-        <p>Visualiza el contenido patrocinado y haz clic en el anuncio para desbloquear tu enlace.</p>
+        <p>Apoya el servicio viendo la publicidad y desbloquea el enlace de reproducción.</p>
 
-        <!-- ESPACIO DEL ANUNCIO DE MONETAG -->
-        <div class="ad-container">
-            <!-- AQUÍ PEGÁS EL CÓDIGO SCRIPT QUE TE DA MONETAG PARA TU BANNER/ZONA WEB -->
-            <script type="text/javascript" src="https://tu-script-de-monetag.com/tag.min.js" data-zone="TU_ZONA"></script>
+        <!-- ACÁ SE DIBUJA EL ANUNCIO -->
+        <div class="ad-box">
+            <!-- AQUÍ PEGÁS EL SCRIPT QUE TE DIO MONETAG -->
+            <script>(function(s){s.dataset.zone='12171562',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
         </div>
 
-        <!-- Botón para comprobar / desbloquear tras interactuar con el anuncio -->
+        <!-- Botón de desbloqueo -->
         <button id="unlock-btn" class="action-btn" onclick="desbloquearEnlace()">
-            <i class="fa-solid fa-check-circle"></i> Ya vi el anuncio / Desbloquear M3U
+            <i class="fa-solid fa-lock-open"></i> Desbloquear Enlace M3U
         </button>
 
-        <!-- Sección oculta con el M3U -->
+        <!-- Campo oculto que aparece al tocar el botón -->
         <div id="hidden-section">
             <input type="text" id="m3uUrl" class="m3u-input" value="https://tu-proyecto.onrender.com/tu-lista.m3u" readonly>
             <button class="copy-btn" onclick="copiarLista()">
-                <i class="fa-regular fa-copy"></i> Copiar Enlace M3U
+                <i class="fa-regular fa-copy"></i> Copiar al Portapapeles
             </button>
         </div>
     </div>
@@ -72,7 +72,6 @@
 
     <script>
         function desbloquearEnlace() {
-            // Oculta el botón y muestra el link M3U para copiar
             document.getElementById('unlock-btn').style.display = 'none';
             document.getElementById('hidden-section').style.display = 'block';
         }
