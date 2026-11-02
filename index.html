@@ -3,86 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista M3U - Portal Oficial</title>
+    <title>Portal M3U - Oficial</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
         body { background-color: #0b0f19; color: #f3f4f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .card { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 25px; width: 100%; max-width: 420px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        .logo-icon { font-size: 35px; color: #3b82f6; margin-bottom: 12px; }
-        h1 { font-size: 20px; font-weight: 600; margin-bottom: 8px; color: #ffffff; }
-        p { font-size: 13px; color: #9ca3af; margin-bottom: 20px; line-height: 1.4; }
+        .card { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 30px; width: 100%; max-width: 420px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .logo-icon { font-size: 40px; color: #3b82f6; margin-bottom: 15px; }
+        h1 { font-size: 22px; font-weight: 600; margin-bottom: 8px; color: #ffffff; }
+        p { font-size: 14px; color: #9ca3af; margin-bottom: 25px; line-height: 1.5; }
         
-        .ad-box {
-            background: #1f2937;
-            border: 1px dashed #374151;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            min-height: 120px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Estilo del botón cuando está bloqueado (cuenta regresiva) */
-        .action-btn { 
-            background: #374151; 
-            color: #9ca3af; 
-            border: none; 
-            border-radius: 10px; 
-            padding: 12px 20px; 
-            font-size: 14px; 
-            font-weight: 600; 
-            width: 100%; 
-            cursor: not-allowed; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 10px; 
-            transition: 0.2s; 
-        }
-
-        /* Estilo del botón cuando ya se habilitó */
-        .action-btn.active {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-        }
-        .action-btn.active:hover { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); }
+        .action-btn { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; border: none; border-radius: 10px; padding: 14px 20px; font-size: 15px; font-weight: 600; width: 100%; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
+        .action-btn:hover { background: linear-gradient(135deg, #2563eb 100%, #1d4ed8 100%); }
 
         #hidden-section { display: none; margin-top: 20px; animation: fadeIn 0.4s ease-in-out; }
-        .m3u-input { width: 100%; background: #1f2937; border: 1px solid #374151; border-radius: 10px; padding: 10px 15px; color: #d1d5db; font-size: 13px; outline: none; text-align: center; margin-bottom: 10px; }
-        .copy-btn { background: #10b981; color: white; border: none; border-radius: 10px; padding: 10px; width: 100%; font-weight: 600; cursor: pointer; }
-        
+        .m3u-input { width: 100%; background: #1f2937; border: 1px solid #374151; border-radius: 10px; padding: 12px 15px; color: #d1d5db; font-size: 13px; outline: none; text-align: center; margin-bottom: 12px; }
+        .copy-btn { background: #10b981; color: white; border: none; border-radius: 10px; padding: 12px; width: 100%; font-weight: 600; cursor: pointer; }
+        .copy-btn:hover { background: #059669; }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         
-        #toast { visibility: hidden; background-color: #10b981; color: white; text-align: center; border-radius: 8px; padding: 10px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 14px; opacity: 0; transition: 0.3s; }
+        #toast { visibility: hidden; background-color: #10b981; color: white; text-align: center; border-radius: 8px; padding: 10px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 14px; z-index: 1000; opacity: 0; transition: 0.3s; }
         #toast.show { visibility: visible; opacity: 1; }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <div class="logo-icon"><i class="fa-solid fa-lock" id="lock-icon"></i></div>
+        <div class="logo-icon"><i class="fa-solid fa-satellite-dish"></i></div>
         <h1>Lista M3U Oficial</h1>
-        <p id="instruction-text">Mira el anuncio superior para desbloquear el enlace (Espera <span id="countdown">5</span>s)...</p>
+        <p>Haz clic en el botón para cargar el contenido y obtener tu enlace de reproducción.</p>
 
-        <!-- ANUNCIO DE MONETAG -->
-        <div class="ad-box">
-            <script>(function(s){s.dataset.zone='12171562',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-        </div>
-
-        <!-- Botón condicionado -->
-        <button id="unlock-btn" class="action-btn" disabled onclick="desbloquearEnlace()">
-            <i class="fa-solid fa-lock"></i> Espera para desbloquear...
+        <!-- Botón de acción principal -->
+        <button id="main-btn" class="action-btn" onclick="desbloquearEnlace()">
+            <i class="fa-solid fa-unlock-keyhole"></i> Obtener Enlace M3U
         </button>
 
-        <!-- Sección oculta del M3U -->
+        <!-- Sección del M3U (oculta hasta hacer clic) -->
         <div id="hidden-section">
+            <p style="color: #10b981; margin-bottom: 10px; font-weight: 600; font-size: 13px;">¡Enlace generado con éxito!</p>
             <input type="text" id="m3uUrl" class="m3u-input" value="https://tu-proyecto.onrender.com/tu-lista.m3u" readonly>
             <button class="copy-btn" onclick="copiarLista()">
                 <i class="fa-regular fa-copy"></i> Copiar al Portapapeles
@@ -92,17 +53,26 @@
 
     <div id="toast"><i class="fa-solid fa-check"></i> ¡Enlace copiado!</div>
 
-    <script>
-        // Cuenta regresiva obligatoria de 5 segundos para que vean el banner
-        let segundos = 5;
-        const contadorSpan = document.getElementById('countdown');
-        const unlockBtn = document.getElementById('unlock-btn');
-        const instructionText = document.getElementById('instruction-text');
-        const lockIcon = document.getElementById('lock-icon');
+    <!-- SCRIPT DE MONETAG VIGNETTE (ZONA 12171624) -->
+    <script>(function(s){s.dataset.zone='12171624',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
-        const timer = setInterval(() => {
-            segundos--;
-            contadorSpan.innerText = segundos;
-            if (segundos <= 0) {
-                clearInterval(timer);
-                // Habilitar el botón de forma atract
+    <script>
+        function desbloquearEnlace() {
+            // Revelar la sección del M3U al hacer clic de forma fluida
+            document.getElementById('main-btn').style.display = 'none';
+            document.getElementById('hidden-section').style.display = 'block';
+        }
+
+        function copiarLista() {
+            const input = document.getElementById('m3uUrl');
+            input.select();
+            navigator.clipboard.writeText(input.value).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2500);
+            });
+        }
+    </script>
+
+</body>
+</html>
