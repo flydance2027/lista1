@@ -15,7 +15,6 @@
         h1 { font-size: 20px; font-weight: 600; margin-bottom: 8px; color: #ffffff; }
         p { font-size: 13px; color: #9ca3af; margin-bottom: 20px; line-height: 1.4; }
         
-        /* Espacio reservado para el banner de Monetag */
         .ad-box {
             background: #1f2937;
             border: 1px dashed #374151;
@@ -28,8 +27,32 @@
             align-items: center;
         }
 
-        .action-btn { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; border: none; border-radius: 10px; padding: 12px 20px; font-size: 14px; font-weight: 600; width: 100%; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s; }
-        .action-btn:hover { background: linear-gradient(135deg, #2563eb 100%, #1d4ed8 100%); }
+        /* Estilo del botón cuando está bloqueado (cuenta regresiva) */
+        .action-btn { 
+            background: #374151; 
+            color: #9ca3af; 
+            border: none; 
+            border-radius: 10px; 
+            padding: 12px 20px; 
+            font-size: 14px; 
+            font-weight: 600; 
+            width: 100%; 
+            cursor: not-allowed; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px; 
+            transition: 0.2s; 
+        }
+
+        /* Estilo del botón cuando ya se habilitó */
+        .action-btn.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        .action-btn.active:hover { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); }
 
         #hidden-section { display: none; margin-top: 20px; animation: fadeIn 0.4s ease-in-out; }
         .m3u-input { width: 100%; background: #1f2937; border: 1px solid #374151; border-radius: 10px; padding: 10px 15px; color: #d1d5db; font-size: 13px; outline: none; text-align: center; margin-bottom: 10px; }
@@ -44,22 +67,21 @@
 <body>
 
     <div class="card">
-        <div class="logo-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+        <div class="logo-icon"><i class="fa-solid fa-lock" id="lock-icon"></i></div>
         <h1>Lista M3U Oficial</h1>
-        <p>Apoya el servicio viendo la publicidad y desbloquea el enlace de reproducción.</p>
+        <p id="instruction-text">Mira el anuncio superior para desbloquear el enlace (Espera <span id="countdown">5</span>s)...</p>
 
-        <!-- ACÁ SE DIBUJA EL ANUNCIO -->
+        <!-- ANUNCIO DE MONETAG -->
         <div class="ad-box">
-            <!-- AQUÍ PEGÁS EL SCRIPT QUE TE DIO MONETAG -->
             <script>(function(s){s.dataset.zone='12171562',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
         </div>
 
-        <!-- Botón de desbloqueo -->
-        <button id="unlock-btn" class="action-btn" onclick="desbloquearEnlace()">
-            <i class="fa-solid fa-lock-open"></i> Desbloquear Enlace M3U
+        <!-- Botón condicionado -->
+        <button id="unlock-btn" class="action-btn" disabled onclick="desbloquearEnlace()">
+            <i class="fa-solid fa-lock"></i> Espera para desbloquear...
         </button>
 
-        <!-- Campo oculto que aparece al tocar el botón -->
+        <!-- Sección oculta del M3U -->
         <div id="hidden-section">
             <input type="text" id="m3uUrl" class="m3u-input" value="https://tu-proyecto.onrender.com/tu-lista.m3u" readonly>
             <button class="copy-btn" onclick="copiarLista()">
@@ -71,21 +93,16 @@
     <div id="toast"><i class="fa-solid fa-check"></i> ¡Enlace copiado!</div>
 
     <script>
-        function desbloquearEnlace() {
-            document.getElementById('unlock-btn').style.display = 'none';
-            document.getElementById('hidden-section').style.display = 'block';
-        }
+        // Cuenta regresiva obligatoria de 5 segundos para que vean el banner
+        let segundos = 5;
+        const contadorSpan = document.getElementById('countdown');
+        const unlockBtn = document.getElementById('unlock-btn');
+        const instructionText = document.getElementById('instruction-text');
+        const lockIcon = document.getElementById('lock-icon');
 
-        function copiarLista() {
-            const input = document.getElementById('m3uUrl');
-            input.select();
-            navigator.clipboard.writeText(input.value).then(() => {
-                const toast = document.getElementById('toast');
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 2500);
-            });
-        }
-    </script>
-
-</body>
-</html>
+        const timer = setInterval(() => {
+            segundos--;
+            contadorSpan.innerText = segundos;
+            if (segundos <= 0) {
+                clearInterval(timer);
+                // Habilitar el botón de forma atract
